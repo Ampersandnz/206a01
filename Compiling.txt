@@ -1,2 +1,7 @@
-gcc -o DataTask Datatask.c
-./DataTask
+//C:
+	gcc -o DataTask DataTask.c
+	./DataTask
+	
+//Java:
+	javac DataTask.java
+	java DataTask
