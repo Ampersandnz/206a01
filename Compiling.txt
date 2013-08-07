@@ -1,7 +1,10 @@
 //C:
-	gcc -o DataTask DataTask.c
-	./DataTask
+	gcc -o DataTask *Task.c
+	./*Task
 	
 //Java:
-	javac DataTask.java
-	java DataTask
+	javac *Task.java
+	java *Task
+
+//Bash:
+	./*Task.sh

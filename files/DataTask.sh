@@ -1,4 +1,4 @@
- #
+##
  # University of Auckland
  # SoftEng 206 - Assignment 1 Part 1
  # Language: Bash
@@ -16,10 +16,18 @@
  # 		
  # Usage:
  #  	./DataTask
- #
+##
 
 # Delete the data file
 rm -f data.txt
+
+
+
+
+
+
+
+
 
 
 
