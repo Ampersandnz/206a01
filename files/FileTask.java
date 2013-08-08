@@ -51,14 +51,51 @@ public class FileTask {
 		private String filePath;
 		filePath = directory + "/" + contactName + ".contact"
 
+		Path path = FileSystems.getDefault().getPath(filePath);
+#=============================================================================================================================#
+/*
+     // truncate and overwrite an existing file, or create the file if
+     // it doesn't initially exist
+     OutputStream out = Files.newOutputStream(file);
 
+     // append to an existing file, fail if the file does not exist
+     out = Files.newOutputStream(file, APPEND);
+
+     // append to an existing file, create file if it doesn't initially exist
+     out = Files.newOutputStream(path, CREATE, APPEND);
+
+     // always create new file, failing if it already exists
+     out = Files.newOutputStream(file, CREATE_NEW); 
+*/
+
+
+//		OutputStream out = Files.newOutputStream(path, 
+
+		if (filePointer == NULL) {
+			/* === File (or contact) does not exist, so create one and write in correct phone number === */
+			filePointer = fopen(filePath, "w");
+			fprintf(filePointer, "%s", contactNumber);
+			fclose(filePointer);
+			
+		} else {
+			/* === File (or contact) already exists === */
+			
+			/* Close the file which was opened to test if the file existed */
+			out.close();
+
+
+
+
+
+
+
+
+
+		OutputStream out = Files.newOutputStream(path, );
+		out.close();
 	}
 }
 
-	
-		FILE *filePointer;
-		filePointer = fopen(filePath, "r");
-		
 		if (filePointer == NULL) {
 			/* === File (or contact) does not exist, so create one and write in correct phone number === */
 			filePointer = fopen(filePath, "w");

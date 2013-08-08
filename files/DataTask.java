@@ -96,3 +96,20 @@ public class DataTask {
 		out.close();
 	}
 }
+
+
+
+/*
+     // truncate and overwrite an existing file, or create the file if
+     // it doesn't initially exist
+     OutputStream out = Files.newOutputStream(file);
+
+     // append to an existing file, fail if the file does not exist
+     out = Files.newOutputStream(file, APPEND);
+
+     // append to an existing file, create file if it doesn't initially exist
+     out = Files.newOutputStream(path, CREATE, APPEND);
+
+     // always create new file, failing if it already exists
+     out = Files.newOutputStream(file, CREATE_NEW); 
+*/
