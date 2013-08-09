@@ -14,89 +14,55 @@
  #		./FileTask . john 123456
 ##
 
+	# ============= #
+	# Process Input #
+	# ============= #
 
+if [ $# -le 2 ]
+then
+	# === Using standard input === #	
+	echo "Directory: "
+	directory = read year
+	echo "Contact Name: "
+	contactName = read year	
+	echo "Contact Number: "
+	contactNumber = read year
+else
+	# == Using command line arguments === #
+	while getopts d:c:n: flag; 
+	do
+		case $flag in
+		d)
+			directory = $OPTARG;;
+		c)
+			contactName = $OPTARG;;
+		n)
+			contactNumber = $OPTARG;;
+		?)
+			exit;;
+		esac
+	done
+fi
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-int main(int argc, char *argv[])
-{
-	/* Output directory */
-	char directory[256];
+	# ============ #
+	# Main Program #
+	# ============ #
 	
-	/* Name of the contact. Is only one word consisting of letters */
-	char contactName[256];
+# The file path is in the format of <path to file>/<contact name>.contact #
+filePath = "/$directory/$contactName.contact";
 	
-	/* Contact phone number. Is only contain digits */
-	char contactNumber[256];
-
-	/* ============= */
-	/* Process Input */
-	/* ============= */
-	if (argc <= 1) {
-		/* === Using standard input === */	
-		scanf("%s", directory);
-		scanf("%s", contactName);
-		scanf("%s", contactNumber);
-		
-	} else {
-		/* == Using command line arguments === */
-		strcpy(directory, argv[1]);
-		strcpy(contactName, argv[2]);
-		strcpy(contactNumber, argv[3]);
-		
-	}
-
-	/* ============ */
-	/* Main Program */
-	/* ============ */
-	
-	/* The file path is in the format of <path to file>/<contact name>.contact */
-	char filePath[256];
-	sprintf(filePath, "%s/%s.contact", directory, contactName);
-	
-	FILE *filePointer;
-	filePointer = fopen(filePath, "r");
-	
-	if (filePointer == NULL) {
-		/* === File (or contact) does not exist, so create one and write in correct phone number === */
-		filePointer = fopen(filePath, "w");
-		fprintf(filePointer, "%s", contactNumber);
-		fclose(filePointer);
-		
-	} else {
-		/* === File (or contact) already exists === */
-		
-		/* Close the file which was opened to test if the file existed */
-		fclose(filePointer);
-		
-		/* Loop through for example john(1).contact, john(2).contact, john(3).contact and so on... */
-		/* until one of them does not exist, then we write the contact number to that file */
-		int count = 1;
-		for(;;) {
-			sprintf(filePath, "%s/%s(%i).contact", directory, contactName, count);
-			filePointer = fopen(filePath, "r");
-			if (filePointer == NULL) {
-				filePointer = fopen(filePath, "w");
-				fprintf(filePointer, "%s", contactNumber);
-				fclose(filePointer);
-				break;
-			}
-			fclose(filePointer);
-			count = count + 1;
-		}
-	}
-}	
-	
+if [ ! -e $filePath ]; then
+	# === File (or contact) does not exist, so create one and write in correct phone number === #
+	echo $contactNumber > $filePath
+else	
+	# === File (or contact) already exists === #
+	i = 1;
+	# Loop through for example john(1).contact, john(2).contact, john(3).contact and so on... #
+	# until one of them does not exist, then we write the contact number to that file #
+	for (( ; ; ))
+	do
+		filePath = "/$directory/$contactName($i).contact"
+   		echo $contactNumber > $filePath
+   	i = $i + 1
+	done
+fi
