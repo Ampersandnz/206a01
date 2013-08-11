@@ -37,10 +37,6 @@ else
 	contactNumber=$3
 fi
 
-echo $directory
-echo $contactName
-echo $contactNumber
-
 	# ============ #
 	# Main Program #
 	# ============ #
@@ -71,3 +67,4 @@ else
    	i=$[i + 1]
 	done
 fi
+echo "Created " + $filePath

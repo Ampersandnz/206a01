@@ -1,3 +1,20 @@
 chmod - File permissions. Need to use in some form to execute programs.
 grep - Apply same function to range of inputs.
 ls - List files.
+()
+[]
+{}
+<>
+|
+!
+$
+#
+&
+?
+pushd
+popd
+~
+cd
+@
+awk
+touch

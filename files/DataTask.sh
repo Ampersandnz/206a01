@@ -18,77 +18,52 @@
  #  	./DataTask
 ##
 
+function containedIn {
+	local c
+	for c in "${@:2}" 
+	do 
+		[[ "$c" == "$1" ]] && return 1
+	done
+	return 0
+}
+
+function printArray {
+	local l
+	for l in "${@:1}"
+	do 
+		echo $l>>$fileName
+	done
+	return
+}
+
+fileName="data.txt"
+arraySize=0
+
 # Delete the data file
-rm -f data.txt
+rm -f $fileName
+touch $fileName
 
-# List all files in the directory containing the string "contact"
-####CHECK THIS WORKS THEN USE AS FOR LOOP TO PERFORM OPERATIONS
-find -name | grep -e '*[contact]*.txt'
-ls -R | grep -e '*[contact]*.txt'
+#For all files in directory that contain "contact":
+for f in $(ls | grep "contact")
+do
+	# Open the file and get its content
+	read line < $f
+  	data=$line
 
-ls | grep "^a"
+	# Loop through existing contents stored in fileContent, checking for duplicates with current content
+	if containedIn $data ${fileContent[@]}
+	then	
+		# Add data to fileContent if it passed all above checks
+		fileContent[$arraySize]=$data
+		arraySize=$[arraySize + 1]
+	fi
+done
 
-will give you all files beginning with the letter a and just works on the current directory whereas find will drill down into sub-directories by default.
+# Write fileContent to data.txt
+printArray "${fileContent[@]}"
 
+# Sort fileContent.
+sort -u $fileName -o $fileName
 
-
-
-
-# 	# Loop through all files in directory 
-# 	for(;;)
-# 	{
-# 		# Read the next file 
-# 		struct dirent *fileEntry = readdir(directoryPointer);
-# 		# If there are no more files left to loop through, then break out of the loop
-# 		if (fileEntry == NULL)
-# 		{
-# 			break;
-# 		}
-		
-# 		# Filter out files that do not contain "contact" in its file name
-# 		if (!strstr(fileEntry->d_name, "contact"))
-# 		{
-# 			continue;
-# 		}
-		
-# 		# Open the file and get its content
-# 		char fileContent[MAX];		
-# 		FILE *filePointer = fopen(fileEntry->d_name, "r");
-# 		fgets(fileContent, MAX, filePointer);
-# 		fclose(filePointer);
-		
-# 		# Loop through existing contents stored in filesContent, checking for duplicates with current content
-# 		int i;
-# 		int foundDuplicate = 0;
-# 		for(i=0; i<filesContentCount; i++)
-# 		{
-# 			if(strcmp(fileContent, filesContent[i]) == 0)
-# 			{
-# 				foundDuplicate=1;
-# 				break;
-# 			}
-# 		}
-# 		if (foundDuplicate == 1)
-# 		{
-# 			continue;
-# 		}
-		
-# 		# Add the data to the array if it passed all above checks
-# 		filesContent[filesContentCount] = malloc(strlen(fileContent)+1);
-# 		strcpy(filesContent[filesContentCount], fileContent);
-# 		filesContentCount++;
-# 	}
-# 	closedir(directoryPointer);
-
-# 	# Sort the filesContent array. (Hint: Equivalent to the bash sort command)
-# 	qsort(filesContent, filesContentCount, sizeof(*filesContent), comparator);
-	
-# 	# Write the each file content as to the array separated by new lines
-# 	FILE *filePointer = fopen(DATA_FILE_NAME, "w");	
-# 	int i;
-# 	for(i=0; i<filesContentCount; i++)
-# 	{
-# 		fprintf(filePointer, "%s", filesContent[i]);
-# 	}
-# 	fclose(filePointer);
-# }
+# Separate entries in data.txt by new lines
+sed '/$/G' $fileName>tmp && mv tmp $fileName
