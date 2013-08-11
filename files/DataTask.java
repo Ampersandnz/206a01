@@ -28,7 +28,7 @@ public class DataTask {
 	private static String DATA_FILE_NAME = "data.txt";
 
 	public static void main (String[] args) {
-		/* Array of string to store the content of each file */
+		/* Array of strings to store the content of each file */
 		String[] filesContent = new String [MAX];
 
 		int filesContentCount = 0;
@@ -36,10 +36,12 @@ public class DataTask {
 		/* Open the directory so we can iterate through all the files in it */
 		File file = createFile();
 		File directory = file.getParentFile();
+
 		/*Get array of all files in directory*/
 		File[] contents = directory.listFiles();
 		List<String> strings = new ArrayList<String>();
 		String currentData;
+
 		/* Loop through all files in directory */
 		for (File f : contents) {
 			currentData = getData(f);
@@ -50,6 +52,7 @@ public class DataTask {
 
 		Collections.sort(strings); 
 		strings.remove(0);
+		
 		output(strings, file);
 	}
 
@@ -109,8 +112,6 @@ public class DataTask {
 			
 			/* Delete the data file */
 			Files.deleteIfExists(FileSystems.getDefault().getPath(completeFile));
-		
-			//file.createNewFile();
 
 			return file;
 
