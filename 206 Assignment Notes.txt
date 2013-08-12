@@ -1,0 +1,22 @@
+To force scripts to run in Bash rather than current shell use:
+#!/bin/bash
+
+C:
+	gcc -o output_filename filename.c (Compile_)
+	./files/filename (Run)
+
+Java:
+	javac ./files/filename.java (Compile)
+	java -cp "./files/" filename (Run)
+
+Bash:
+	./files/filename.sh (Run)
+	Used chmod to set privileges for scripts to make them executable.
+
+Previous experience in Java made it easier to write than Bash, but Bash scripts were much simpler than Java programs to complete the two tasks.
+Java's complex handling of input and output make file manipulation quite involved, whereas Bash is designed for use in an OS.
+Basic Google/StackOverflow searches resolved any issues with not knowing the correct command/how to use it.
+Overall Bash was much easier and simpler.
+
+Java offers much more functionality and allows much more complex programs, but for small tasks like these Bash is a lot easier. 
+As with previous courses, Google, StackOverflow and the Java documentation were invaluable.
